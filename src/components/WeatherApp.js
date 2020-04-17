@@ -59,14 +59,14 @@ function WeatherApp(props) {
     <div className="body-warm">
       <div
         className={
-          props.weatherData.cod === "200"
-            ? props.weatherData.list[0].main.temp < 0
+          props.weatherData.cod === 200
+            ? props.weatherData.main.temp < 0
               ? "body-minus"
-              : props.weatherData.list[0].main.temp < 10
+              : props.weatherData.main.temp < 10
               ? "body-cold"
-              : props.weatherData.list[0].main.temp < 30
+              : props.weatherData.main.temp < 30
               ? "body-warm"
-              : props.weatherData.list[0].main.temp >= 30
+              : props.weatherData.main.temp >= 30
               ? "body-hot"
               : ""
             : ""
@@ -77,19 +77,17 @@ function WeatherApp(props) {
             <input
               type="text"
               placeholder="Search..."
-              name="name"
+              name="city"
               value={props.city}
               onChange={props.setState}
               onKeyPress={props.handleEvent}
             />
-            {props.weatherData.cod === "200" ? (
+            {props.weatherData.cod === 200 ? (
               <React.Fragment>
                 <div className="today">
                   <h1>
-                    {props.loading
-                      ? "loading..."
-                      : props.weatherData.list[0].name}
-                    , {props.weatherData.list[0].sys.country}
+                    {props.loading ? "loading..." : props.weatherData.name},{" "}
+                    {props.weatherData.sys.country}
                   </h1>
                   <div className="todayDay">
                     <p>
@@ -102,61 +100,54 @@ function WeatherApp(props) {
                     <img
                       alt="Condition"
                       src={
-                        props.weatherData.cod === "200"
-                          ? props.weatherData.list[0].weather[0].id >= 200 &&
-                            props.weatherData.list[0].weather[0].id <= 232
+                        props.weatherData.cod === 200
+                          ? props.weatherData.weather[0].id >= 200 &&
+                            props.weatherData.weather[0].id <= 232
                             ? thunder
-                            : props.weatherData.list[0].weather[0].id >= 300 &&
-                              props.weatherData.list[0].weather[0].id <= 321
+                            : props.weatherData.weather[0].id >= 300 &&
+                              props.weatherData.weather[0].id <= 321
                             ? drizzle
-                            : props.weatherData.list[0].weather[0].id >= 500 &&
-                              props.weatherData.list[0].weather[0].id <= 531
+                            : props.weatherData.weather[0].id >= 500 &&
+                              props.weatherData.weather[0].id <= 531
                             ? showers
-                            : props.weatherData.list[0].weather[0].id >= 600 &&
-                              props.weatherData.list[0].weather[0].id <= 622
+                            : props.weatherData.weather[0].id >= 600 &&
+                              props.weatherData.weather[0].id <= 622
                             ? snowy
-                            : props.weatherData.list[0].weather[0].id >= 701 &&
-                              props.weatherData.list[0].weather[0].id <= 781
+                            : props.weatherData.weather[0].id >= 701 &&
+                              props.weatherData.weather[0].id <= 781
                             ? stormy
-                            : props.weatherData.list[0].clouds.all > 30
+                            : props.weatherData.clouds.all > 30
                             ? cloudy
-                            : (props.weatherData.list[0].weather[0].id = 800
+                            : (props.weatherData.weather[0].id = 800
                                 ? sunny
                                 : "")
                           : ""
                       }
                     />
-                    <h2>
-                      {Math.round(props.weatherData.list[0].main.temp)}&#176;c
-                    </h2>
+                    <h2>{Math.round(props.weatherData.main.temp)}&#176;c</h2>
                   </div>
                   <div>
                     <h3>
                       <strong>
                         {props.loading
                           ? "loading..."
-                          : props.weatherData.list[0].weather[0].main}{" "}
+                          : props.weatherData.weather[0].main}{" "}
                       </strong>
                     </h3>
                     <br />
                     <p>
                       Feels like:{" "}
                       <strong>
-                        {Math.round(props.weatherData.list[0].main.feels_like)}
+                        {Math.round(props.weatherData.main.feels_like)}
                         &#176;c
                       </strong>{" "}
                     </p>
                     <p>
                       Humidity:{" "}
-                      <strong>
-                        {props.weatherData.list[0].main.humidity}%
-                      </strong>
+                      <strong>{props.weatherData.main.humidity}%</strong>
                     </p>
                     <p>
-                      Wind:{" "}
-                      <strong>
-                        {props.weatherData.list[0].wind.speed} km/h
-                      </strong>
+                      Wind: <strong>{props.weatherData.wind.speed} km/h</strong>
                     </p>
                   </div>
                 </div>
